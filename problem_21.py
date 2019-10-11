@@ -5,22 +5,23 @@ Given an array of time intervals (start, end) for classroom lectures
 For example, given [(30, 75), (0, 50), (60, 150)], you should return 2.
 """
 
-intervals =  [(30, 75), (0, 50), (60, 150)]
-
-
 def rooms_requried(intervals):
-  intervals.sort()
-  num = 0
+  starts = [(el[0],1) for el in intervals]
+  ends = [(el[1],-1) for el in intervals]
+  starts_ends = [e[1] for e in sorted(starts + ends, key=lambda e: e[0])]
 
-  l = len(intervals)
-  for i in range(l - 1):
-    if intervals[i][1] > intervals[i+1][0]:
-      num += 1
+  rooms = 0
+  events = 0
+  for event in starts_ends:
+    events += event
+    rooms = max(rooms, events)
 
-  if num == 0:
-    return 1
-  else:
-    return num
+  return rooms
 
 
-print(rooms_requried(intervals))
+assert rooms_requried([]) == 0
+assert rooms_requried([(30, 75), (0, 50), (60, 150)]) == 2
+assert rooms_requried([(30, 75), (0, 50), (10, 60), (60, 150)]) == 3
+assert rooms_requried([(60, 150)]) == 1
+assert rooms_requried([(60, 150), (150, 170)]) == 2
+assert rooms_requried([(60, 150), (60, 150), (150, 170)]) == 3
