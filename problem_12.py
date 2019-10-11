@@ -10,7 +10,7 @@ For example, if X = {1, 3, 5}, you could climb 1, 3, or 5 steps at a time.
 # N = 3, [ [0,1,2,3], [0,2,3], [0,1,3] ]
 # N = 4, [ [ 0,1,2,3,4], [0,2,4], [0,2,3,4], [0,1,3,4], [0,1,2,4] ]
 
-class Inefficient_Solution:
+class Bad_Solution:
     def __init__(self, N):
       self.N = N
       self.paths = []
@@ -20,8 +20,10 @@ class Inefficient_Solution:
         self.num_ways_helper(self.N, self.step+1, [0])
         self.num_ways_helper(self.N, self.step+2, [0])
 
-        print(self.paths)
-        print(len(self.paths))
+        print("Bad Solution")
+        print(f"Paths: {self.paths}")
+        print(f"number of ways: {len(self.paths)}")
+        print()
 
     def num_ways_helper(self, N, step, path):
         if N != step and N > step:
@@ -33,6 +35,22 @@ class Inefficient_Solution:
         if N == step:
             path.append(step)
             self.paths.append(path)
+
+class Better_Solution:
     
-solution = Inefficient_Solution(4)
+    def __init__(self):
+        pass
+    
+    def num_ways(self, N):
+        if N == 0 or N == 1:
+            return 1
+        else:
+            return self.num_ways(N-1) + self.num_ways(N-2)
+
+solution = Bad_Solution(4)
 solution.num_ways()
+
+better_solution = Better_Solution()
+print("Better solution")
+print(f"number of ways: {better_solution.num_ways(4)}")
+print()
